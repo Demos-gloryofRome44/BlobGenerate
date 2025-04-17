@@ -1,3 +1,15 @@
+/**
+ * Генерирует SVG-путь для случайного blolba с заданными параметрами.
+ * 
+ * @param {Object} config - Конфигурационный объект параметров:
+ * @param {number} config.vertices - Количество контрольных точек(углов)
+ * @param {number} config.smoothness - Уровень гладкости кривых (0-100)
+ * @param {number} config.width - Ширина области для центрирования фигуры
+ * @param {number} config.height - Высота области для центрирования фигуры
+ * 
+ * @returns {string} - SVG path data в формате "M x,y C x1,y1 x2,y2 x,y ..."
+ **/
+
 export const generateBlobPath = ({ 
     vertices, 
     smoothness, 

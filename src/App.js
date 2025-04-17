@@ -2,7 +2,7 @@ import React, { useState, useRef, useMemo, useEffect } from 'react';
 import BlobCanvas from './components/blobcanvas/BlobCanvas';
 import ControlsPanel from './components/ControlsPanel';
 import DownloadButton from './components/DownloadButton';
-import './App.css';
+import './styles/App.css';
 import { shadeColor } from './utils/СolorUtils';
 
 function App() {
@@ -15,11 +15,9 @@ function App() {
   const [isAnimated, setIsAnimated] = useState(false);
   const [showColorPicker, setShowColorPicker] = useState(false);
   
-  // 1. Создаем ref для SVG
   const svgRef = useRef(null);
   const canvasSize = 400;
 
-  // 2. Проверка что ref подключен (для отладки)
   useEffect(() => {
     console.log('SVG Ref:', svgRef.current);
   }, []);
