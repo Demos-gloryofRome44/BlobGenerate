@@ -8,6 +8,10 @@
     transform-origin: center;
     opacity: 0.8;
   }
+
+  .blob-animated {
+    animation: pulse 2s infinite alternate;
+  }
   
   @keyframes flow-animation {
     0% {
