@@ -18,8 +18,8 @@ export const generateBlobPath = ({
   }) => {
     // Параметры генерации
     const params = {
-      MIN_POINTS: Math.max(3, Math.floor(vertices / 2)),
-      MAX_POINTS: Math.max(5, Math.ceil(vertices * 1.5)),
+      MIN_POINTS: Math.max(3, Math.floor(vertices)),
+      MAX_POINTS: Math.max(5, Math.ceil(vertices)),
       G_SCALE: 50,
       H_SCALE: 25,
       SMOOTHNESS: smoothness / 100,
@@ -31,8 +31,8 @@ export const generateBlobPath = ({
     const pi = Math.PI;
   
     // Генерация случайных параметров формы
-    const a = random(0.1, 0.7);
-    const b = random(0.1, 0.7);
+    const a = random(0.3, 0.7);
+    const b = random(0.3, 0.7);
     const c = random(0, 2 * pi);
   
     // Количество точек

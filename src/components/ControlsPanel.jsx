@@ -20,8 +20,8 @@ const ControlsPanel = ({
           Vertices: {vertices}
           <input
             type="range"
-            min="4"
-            max="20"
+            min="3"
+            max="15"
             value={vertices}
             onChange={(e) => setVertices(parseInt(e.target.value))}
           />
