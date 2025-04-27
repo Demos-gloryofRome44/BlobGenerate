@@ -33,7 +33,7 @@ const ControlsPanel = ({
           Shape: {smoothness < 30 ? 'Circle' : smoothness < 70 ? 'Smooth' : 'Spiky'}
           <input
             type="range"
-            min="0"
+            min="15"
             max="100"
             value={smoothness}
             onChange={(e) => setSmoothness(parseInt(e.target.value))}
