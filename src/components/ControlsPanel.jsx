@@ -12,6 +12,7 @@ const ControlsPanel = ({
   setIsAnimated,
   showColorPicker,
   setShowColorPicker,
+  regenerateBlob
 }) => {
   return (
     <div className="controls-panel">
@@ -43,7 +44,7 @@ const ControlsPanel = ({
 
       <div className="control-group color-control">
         <button onClick={() => setShowColorPicker(!showColorPicker)}>
-          Выбрать цвет блоба
+        Choose the blob color
         </button>
         {showColorPicker && (
           <div className="color-picker">
@@ -65,6 +66,12 @@ const ControlsPanel = ({
           />
           Animate Blob
         </label>
+      </div>
+
+      <div className="control-group regenerate-group">
+        <button className="regenerate-button" onClick={regenerateBlob}>
+          Regenerate Blob
+        </button>
       </div>
     </div>
   );
