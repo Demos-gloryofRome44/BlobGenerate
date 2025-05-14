@@ -7,7 +7,14 @@ import { shadeColor } from './utils/ColorUtils';
 
 function App() {
   const [color, setColor] = useState('#544F5E');
-  const strokeColor = useMemo(() => shadeColor(color, -20), [color]);
+  const strokeColor = useMemo(() => {
+    try {
+      return shadeColor(color, -20);
+    } catch (e) {
+      console.error('Error shading color:', e);
+      return '#000000'; 
+    }
+  }, [color]);
 
   const [vertices, setVertices] = useState(8);
   const [smoothness, setSmoothness] = useState(70);
@@ -20,7 +27,6 @@ function App() {
       svgRef.current.regenerateBlob();
     }
   };
-  
   
   const svgRef = useRef(null);
   const canvasSize = 400;

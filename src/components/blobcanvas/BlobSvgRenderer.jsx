@@ -14,7 +14,6 @@ const BlobSvgRenderer = forwardRef(({
 }, ref) => {
   const pathRef = useRef(null);
 
-  // Анимация между двумя состояниями (при изменении параметров)
   useEffect(() => {
     if (!isAnimated && prevPath && path && prevPath !== path && pathRef.current) {
       pathRef.current.querySelectorAll('animate').forEach(a => a.remove());

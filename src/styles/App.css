@@ -304,7 +304,6 @@ h1 {
   text-align: center;
 }
 
-/* Стили кнопки регенерации */
 .regenerate-button {
   background: var(--primary-color);
   color: white;
