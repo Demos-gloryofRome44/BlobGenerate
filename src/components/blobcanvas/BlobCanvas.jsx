@@ -1,15 +1,15 @@
-import React, { 
-    useEffect, 
-    useRef, 
-    useImperativeHandle,
-    forwardRef,
-    useCallback,
-    useState
-  } from 'react';
-  import { generateBlobPath } from '../../utils/BlobGenerator';
-  import BlobSvgRenderer from './BlobSvgRenderer';
-  
-  const BlobCanvas = forwardRef(({
+import React, {
+  useRef,
+  useImperativeHandle,
+  forwardRef
+} from 'react';
+import { generateBlobPath } from '../../utils/BlobGenerator';
+import { useMorphingPath } from '../../hooks/useMorphingPath';
+import { useAnimatedPaths } from '../../hooks/useAnimatedPaths';
+import BlobSvgRenderer from './BlobSvgRenderer';
+
+const BlobCanvas = forwardRef((props, ref) => {
+  const {
     vertices,
     smoothness,
     color,
@@ -18,67 +18,42 @@ import React, {
     width,
     height,
     isAnimated
-  }, ref) => {
-    const svgRef = useRef(null);
-    const [currentPath, setCurrentPath] = useState(null);
-    const animationRef = useRef(null);
-  
-    const generateBlobShape = useCallback(() => {
-      return generateBlobPath({ vertices, smoothness, width, height });
-    }, [vertices, smoothness, width, height]);
-  
-    const updateBlobShape = useCallback(() => {
-      const path = generateBlobShape();
-      setCurrentPath(path);
-    }, [generateBlobShape]);
-  
-    const updateStyles = useCallback(() => {
-      if (!svgRef.current) return;
-      const blobPath = svgRef.current.querySelector('#blob-path');
-      if (blobPath) {
-        blobPath.setAttribute('fill', color);
-        blobPath.setAttribute('stroke', strokeColor);
-        blobPath.setAttribute('stroke-width', strokeWidth);
-      }
-    }, [color, strokeColor, strokeWidth]);
-  
-    useEffect(() => {
-      updateBlobShape();
-    }, [updateBlobShape]);
-  
-    useEffect(() => {
-      if (!isAnimated) {
-        updateBlobShape();
-      }
-    }, [vertices, smoothness, isAnimated, updateBlobShape]);
-  
-    useEffect(() => {
-      updateStyles();
-    }, [updateStyles]);
-  
-    useEffect(() => {
-      if (isAnimated) {
-        animationRef.current = setInterval(updateBlobShape, 100);
-        return () => clearInterval(animationRef.current);
-      }
-    }, [isAnimated, updateBlobShape]);
-  
-    useImperativeHandle(ref, () => ({
-      getSvgElement: () => svgRef.current,
-      regenerateBlob: updateBlobShape
-    }));
-  
-    return (
-      <BlobSvgRenderer
-        ref={svgRef}
-        path={currentPath}
-        color={color}
-        strokeColor={strokeColor}
-        strokeWidth={strokeWidth}
-        width={width}
-        height={height}
-      />
-    );
-  });
-  
-  export default BlobCanvas;
+  } = props;
+
+  const svgRef = useRef(null);
+
+  const { currentPath, prevPath, setCurrentPath, setPrevPath } = useMorphingPath(
+    () => generateBlobPath({ vertices, smoothness, width, height }),
+    [vertices, smoothness, width, height]
+  );
+
+  const animatedPaths = useAnimatedPaths(
+    generateBlobPath,
+    { vertices, smoothness, width, height }
+  );
+
+  useImperativeHandle(ref, () => ({
+    getSvgElement: () => svgRef.current,
+    regenerateBlob: () => {
+      setPrevPath(currentPath);
+      setCurrentPath(generateBlobPath({ vertices, smoothness, width, height }));
+    }
+  }));
+
+  return (
+    <BlobSvgRenderer
+      ref={svgRef}
+      path={currentPath}
+      prevPath={prevPath}
+      animatedPaths={isAnimated ? animatedPaths : []}
+      isAnimated={isAnimated}
+      color={color}
+      strokeColor={strokeColor}
+      strokeWidth={strokeWidth}
+      width={width}
+      height={height}
+    />
+  );
+});
+
+export default BlobCanvas;
