@@ -3,17 +3,30 @@ import BlobCanvas from './components/blobcanvas/BlobCanvas';
 import ControlsPanel from './components/ControlsPanel';
 import DownloadButton from './components/DownloadButton';
 import './styles/App.css';
-import { shadeColor } from './utils/СolorUtils';
+import { shadeColor } from './utils/ColorUtils';
 
 function App() {
   const [color, setColor] = useState('#544F5E');
-  const strokeColor = useMemo(() => shadeColor(color, -20), [color]);
+  const strokeColor = useMemo(() => {
+    try {
+      return shadeColor(color, -20);
+    } catch (e) {
+      console.error('Error shading color:', e);
+      return '#000000'; 
+    }
+  }, [color]);
 
   const [vertices, setVertices] = useState(8);
   const [smoothness, setSmoothness] = useState(70);
   const [strokeWidth, setStrokeWidth] = useState(2);
   const [isAnimated, setIsAnimated] = useState(false);
   const [showColorPicker, setShowColorPicker] = useState(false);
+
+  const regenerateBlob = () => {
+    if (svgRef.current && svgRef.current.regenerateBlob) {
+      svgRef.current.regenerateBlob();
+    }
+  };
   
   const svgRef = useRef(null);
   const canvasSize = 400;
@@ -53,6 +66,7 @@ function App() {
       setIsAnimated={setIsAnimated}
       showColorPicker={showColorPicker}
       setShowColorPicker={setShowColorPicker}
+      regenerateBlob={regenerateBlob}
     />
     
     <DownloadButton svgRef={svgRef} />

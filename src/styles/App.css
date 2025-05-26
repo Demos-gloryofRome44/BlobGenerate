@@ -149,15 +149,17 @@ h1 {
 
 .color-picker {
   position: absolute;
-  z-index: 10;
-  top: 100%;
-  left: 0;
-  margin-top: 10px;
-  padding: 15px;
+  z-index: 100;
+  top: 0;
+  left: calc(100% + 10px);
   background: var(--card-bg);
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  padding: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15),
+              4px 4px 15px rgba(0, 0, 0, 0.1),
+              -2px 0 10px rgba(0, 0, 0, 0.05);
   border: 1px solid var(--border-color);
+  animation: fadeIn 0.2s ease-out;
 }
 
 .blob-container {
@@ -273,18 +275,6 @@ h1 {
   );
 }
 
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 .color-control {
   position: relative;
   display: inline-block; 
@@ -307,6 +297,42 @@ h1 {
   border: 1px solid #e2e8f0;
   box-shadow: 4px 4px 15px rgba(0,0,0,0.1),
               -2px 0 10px rgba(0,0,0,0.05);
+}
+
+.control-group.regenerate-group {
+  margin-top: 12px;
+  text-align: center;
+}
+
+.regenerate-button {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  width: 100%;
+  max-width: 280px;
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.regenerate-button:hover {
+  background: var(--primary-hover);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(67, 56, 202, 0.4);
+}
+
+.regenerate-button:active {
+  background: var(--primary-color);
+  transform: translateY(0);
+  box-shadow: 0 3px 8px rgba(79, 70, 229, 0.3);
 }
 
 /* Анимации */

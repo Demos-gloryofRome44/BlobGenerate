@@ -2,10 +2,7 @@ services:
   app:
     build: .
     ports:
-      - "3000:3000"
-    volumes:
-      - .:/demos/src/app
-      - /demos/src/app/node_modules
-    environment:
-      - NODE_ENV=development
+      - "3000:80"
     restart: unless-stopped
+    environment:
+      - NODE_ENV=production
