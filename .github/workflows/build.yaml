@@ -26,13 +26,12 @@ jobs:
 
       - name: Test compose
         run: |
-          docker-compose build
-          docker-compose up -d
+          docker-compose up --build
           sleep 5
           
           curl --retry 5 --retry-delay 3 --fail http://localhost:3000 || (docker-compose logs && exit 1)
           
-          docker-compose ps | grep -v "Up" && exit 1 || true
+          docker-compose ps && exit 1 || true
           
           docker-compose logs app | grep -i -E "error|fail|exception" && exit 1 || true
 
