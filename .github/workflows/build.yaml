@@ -1,0 +1,35 @@
+name: Docker Compose Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  test-compose:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Docker
+        uses: docker/setup-buildx-action@v2
+
+      - name: Test compose
+        run: |
+          docker-compose build
+          
+          docker-compose up -d
+          
+          curl --retry 5 --fail http://localhost:3000
+          
+          docker-compose ps | grep "Up"
+          
+          docker-compose logs app | grep -i "error" && exit 1 || true
+
+      - name: Cleanup
+        if: always()
+        run: docker-compose down 
