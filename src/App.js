@@ -21,6 +21,7 @@ function App() {
   const [strokeWidth, setStrokeWidth] = useState(2);
   const [isAnimated, setIsAnimated] = useState(false);
   const [showColorPicker, setShowColorPicker] = useState(false);
+  const [animationFrames, setAnimationFrames] = useState(4);
 
   const regenerateBlob = () => {
     if (svgRef.current && svgRef.current.regenerateBlob) {
@@ -50,6 +51,7 @@ function App() {
         width={canvasSize}
         height={canvasSize}
         isAnimated={isAnimated}
+        animationFrames={animationFrames}
       />
     </div>
     
@@ -67,6 +69,8 @@ function App() {
       showColorPicker={showColorPicker}
       setShowColorPicker={setShowColorPicker}
       regenerateBlob={regenerateBlob}
+      animationFrames={animationFrames}
+      setAnimationFrames={setAnimationFrames}
     />
     
     <DownloadButton svgRef={svgRef} />
