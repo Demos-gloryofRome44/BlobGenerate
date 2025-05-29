@@ -17,7 +17,8 @@ const BlobCanvas = forwardRef((props, ref) => {
     strokeWidth = 2,
     width,
     height,
-    isAnimated
+    isAnimated,
+    animationFrames
   } = props;
 
   const svgRef = useRef(null);
@@ -29,7 +30,7 @@ const BlobCanvas = forwardRef((props, ref) => {
 
   const animatedPaths = useAnimatedPaths(
     generateBlobPath,
-    { vertices, smoothness, width, height }
+    { vertices, smoothness, width, height }, animationFrames
   );
 
   useImperativeHandle(ref, () => ({

@@ -12,7 +12,9 @@ const ControlsPanel = ({
   setIsAnimated,
   showColorPicker,
   setShowColorPicker,
-  regenerateBlob
+  regenerateBlob,
+  animationFrames,
+  setAnimationFrames
 }) => {
   return (
     <div className="controls-panel">
@@ -72,6 +74,19 @@ const ControlsPanel = ({
         <button className="regenerate-button" onClick={regenerateBlob}>
           Regenerate Blob
         </button>
+      </div>
+
+      <div className="control-group">
+        <label>
+          Animation Frames: {animationFrames}
+          <input
+            type="range"
+            min="3"
+            max="20"
+            value={animationFrames}
+            onChange={(e) => setAnimationFrames(parseInt(e.target.value))}
+          />
+        </label>
       </div>
     </div>
   );
